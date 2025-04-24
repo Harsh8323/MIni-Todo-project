@@ -67,7 +67,7 @@ body {
   border-radius: 1rem;
   padding: 1rem;
 }
-.add-btn {
+.add-task-btn {
   width: 20%;
   padding: 1rem;
   background-color: #fff;
@@ -75,7 +75,7 @@ body {
   border-radius: 1rem;
   cursor: pointer;
 }
-.add-btn:hover {
+.add-task-btn:hover {
   background-color: #e5e7eb;
   transition: background-color 0.5s ease;
 }
