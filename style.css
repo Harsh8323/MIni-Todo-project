@@ -43,6 +43,10 @@ body {
   color: #6b7280;
   /* line-height: 28px; */
 }
+#taskDisplay {
+  list-style: none;
+  /* display: none; */
+}
 .right-box {
   border: 2px solid #e5e7eb;
   background-color: #ffffff;
@@ -54,7 +58,7 @@ body {
   justify-content: space-between;
   gap: 1rem;
 }
-#task-form {
+#taskForm {
   /* border: 1px solid #000; */
   width: 100%;
   display: flex;
