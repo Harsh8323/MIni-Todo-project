@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini-Todo</title>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/0253bf2c23.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1 class="heading">Task Manager</h1>
+        <p class="subheading">Manage your tasks efficiently</p>
+      </header>
+      <div class="task-box">
+        <div class="left-box">
+          <h2>My Tasks</h2>
+          <div class="task-count">
+            <p>No tasks yet</p>
+            <p>Add your first task to get started</p>
+          </div>
+        </div>
+        <div class="right-box">
+          <h2>Task Controls</h2>
+          <form id="task-form">
+            <input type="text" id="task-input" placeholder="Add task name" />
+            <button class="add-btn">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </form>
+          <div class="task-type">
+            <button class="all-task-btn">All</button>
+            <button class="completed-task-btn">Completed</button>
+            <button class="pending-task-btn">Pending</button>
+
+            <!-- <div class="all-task">
+
+              <button>All tasks</button>
+            </div> -->
+
+            <!-- <div class="completed-task">
+              <button>Completed</button>
+            </div> -->
+
+            <!-- <div class="pending-task">
+              <button>pending</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
