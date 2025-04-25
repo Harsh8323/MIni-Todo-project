@@ -19,4 +19,16 @@ document
 
     document.getElementById("task-input").value = "";
   });
+
+// left box
+document.querySelector(".left-box").addEventListener("click", function () {
+  let taskCount = document.querySelector(".task-count");
+  taskCount.style.display = "none";
+});
+
 // All task buttton
+const allTasks = [];
+document.getElementById("allTaskButton").addEventListener("click", function () {
+  let taskList = document.getElementById("taskList");
+  allTasks.push(taskList);
+});
