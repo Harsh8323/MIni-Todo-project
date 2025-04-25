@@ -34,7 +34,7 @@ body {
   display: flex;
   flex-direction: column;
 }
-.task-count {
+.empty-state {
   /* padding: 2rem */
   display: flex;
   flex-direction: column;

@@ -1,14 +1,11 @@
-// task form validation
+// Task form validation
 document
   .getElementById("taskForm")
   .addEventListener("submit", function (event) {
     event.preventDefault();
-    // adding new task
-    let taskInput = document.getElementById("task-input").value;
-    console.log(taskInput);
-    // if (taskInput === "") {
-    //   return;
-    // }
+
+    let taskInput = document.getElementById("task-input").value.trim();
+    if (taskInput === "") return; // simple validation
 
     let taskList = document.getElementById("taskList");
 
@@ -17,18 +14,32 @@ document
 
     taskList.appendChild(newTask);
 
-    document.getElementById("task-input").value = "";
+    document.getElementById("task-input").value = ""; // Clear input
+    toggleemptyState(); // Check if we need to hide "No tasks yet"
   });
 
-// left box
-document.querySelector(".left-box").addEventListener("click", function () {
-  let taskCount = document.querySelector(".task-count");
-  taskCount.style.display = "none";
-});
+// Function to hide/show "No tasks yet"
+function toggleemptyState() {
+  const taskList = document.getElementById("taskList");
+  const emptyState = document.getElementById("emptyState");
 
-// All task buttton
+  if (taskList.children.length > 0) {
+    emptyState.style.display = "none"; // Hide message
+  } else {
+    emptyState.style.display = "block"; // Show message
+  }
+}
+
+// All Tasks Button (example logic)
 const allTasks = [];
+
 document.getElementById("allTaskButton").addEventListener("click", function () {
-  let taskList = document.getElementById("taskList");
-  allTasks.push(taskList);
+  let tasks = document.querySelectorAll("#taskList li");
+
+  allTasks.length = 0; // Clear array
+  tasks.forEach((task) => {
+    allTasks.push(task.textContent); // Store text of each task
+  });
+
+  console.log(allTasks); // Check all tasks in console
 });
