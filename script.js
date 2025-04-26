@@ -1,45 +1,42 @@
-// Task form validation
-document
-  .getElementById("taskForm")
-  .addEventListener("submit", function (event) {
-    event.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
+  const taskForm = document.getElementById("taskForm");
+  const taskInput = document.getElementById("task-input");
 
-    let taskInput = document.getElementById("task-input").value.trim();
-    if (taskInput === "") return; // simple validation
-
-    let taskList = document.getElementById("taskList");
-
-    let newTask = document.createElement("li");
-    newTask.textContent = taskInput;
-
-    taskList.appendChild(newTask);
-
-    document.getElementById("task-input").value = ""; // Clear input
-    toggleemptyState(); // Check if we need to hide "No tasks yet"
-  });
-
-// Function to hide/show "No tasks yet"
-function toggleemptyState() {
+  const addTaskButton = document.getElementById("addTaskButton");
   const taskList = document.getElementById("taskList");
-  const emptyState = document.getElementById("emptyState");
+  const allTaskButton = document.getElementById("allTaskButton");
+  const completedTaskButton = document.getElementById("completedTaskButton");
+  const pendingTaskButton = document.getElementById("pendingTaskButton");
 
-  if (taskList.children.length > 0) {
-    emptyState.style.display = "none"; // Hide message
-  } else {
-    emptyState.style.display = "block"; // Show message
-  }
-}
-
-// All Tasks Button (example logic)
-const allTasks = [];
-
-document.getElementById("allTaskButton").addEventListener("click", function () {
-  let tasks = document.querySelectorAll("#taskList li");
-
-  allTasks.length = 0; // Clear array
-  tasks.forEach((task) => {
-    allTasks.push(task.textContent); // Store text of each task
+  taskForm.addEventListener("submit", function (e) {
+    e.preventDefault();
   });
 
-  console.log(allTasks); // Check all tasks in console
+  let tasks = JSON.parse(localStorage.getItem("tasks") || []);
+  tasks.forEach((task) => renderTask(task));
+
+  // adding tasks
+  addTaskButton.addEventListener("click", () => {
+    const taskText = taskInput.value.trim();
+    if (taskText === "") return;
+    const newTask = {
+      id: Date.now(),
+      text: taskText,
+      completed: false,
+    };
+    tasks.push(newTask);
+    saveTasks();
+    taskInput.value = "";
+    // console.log(tasks);
+  });
+
+  // rendering tasks
+  function renderTask(task) {
+    console.log(task);
+  }
+
+  // saving tasks
+  function saveTasks() {
+    localStorage.setItem("taks", JSON.stringify(tasks));
+  }
 });
