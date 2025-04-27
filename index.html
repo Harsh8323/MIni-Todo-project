@@ -11,11 +11,12 @@
     ></script>
   </head>
   <body>
-    <div class="container">
+    <div class="app-container">
       <header>
         <h1 class="heading">Task Manager</h1>
         <p class="subheading">Manage your tasks efficiently</p>
       </header>
+
       <div class="todo-box">
         <div class="left-box">
           <h2>My Tasks</h2>
@@ -25,6 +26,7 @@
           </div>
           <ul id="todo-List"></ul>
         </div>
+
         <div class="right-box">
           <h2>Task Controls</h2>
           <form id="taskForm">
@@ -34,18 +36,16 @@
             </button>
           </form>
 
-          <div class="task-type">
-            <button id="allTaskButton" class="all-task-btn">All</button>
-            <button id="completedTaskButton" class="completed-task-btn">
+          <div class="filter-buttons">
+            <button id="filter-btn" class="all-task-btn">All</button>
+            <button id="filter-btn" class="completed-task-btn">
               Completed
             </button>
-            <button id="pendingTaskButton" class="pending-task-btn">
-              Pending
-            </button>
+            <button id="filter-btn" class="pending-task-btn">Pending</button>
           </div>
         </div>
       </div>
     </div>
+    <script src="script.js"></script>
   </body>
-  <script src="script.js"></script>
 </html>
