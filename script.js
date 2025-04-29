@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // DOM elements
   const taskForm = document.getElementById("taskForm");
   const taskInput = document.getElementById("taskInput");
   const addTaskBtn = document.getElementById("addTaskBtn");
@@ -11,6 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // taskForm.addEventListener("submit", (e) => {
   //   e.preventDefault();
   // });
+
+  addTaskBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    addTask();
+  });
 
   function addTask() {
     // const taskInput = document.getElementById("taskInput");
@@ -36,10 +42,27 @@ document.addEventListener("DOMContentLoaded", function () {
     taskInput.focus();
   }
 
+  function toggleTaskCompletion(index) {
+    tasks[index].completed = !tasks[index].completed;
+    console.log(tasks);
+    saveTasks();
+    renderTasks();
+  }
+
+  function deleteTask(index) {
+    if (confirm("Are you sure you want to delete this task?")) {
+      tasks.splice(index, 1);
+      saveTasks();
+      renderTasks();
+    }
+    console.log(tasks);
+  }
+
   function renderTasks() {
     taskList.innerHTML = "";
 
     tasks.forEach((task) => {
+    tasks.forEach((task, index) => {
       const listItem = document.createElement("li");
 
       listItem.innerHTML = `
@@ -63,9 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
       `;
 
+      listItem.addEventListener("change", () => toggleTaskCompletion(index));
+
       taskList.appendChild(listItem);
       // taskList.style.display = "hidden";
       hideContent();
+      hideContent(); //-> hide empty state
     });
   }
 
@@ -77,6 +103,9 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     addTask();
   });
+  function saveTasks() {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
 });
 
 // function renderTasks() {
