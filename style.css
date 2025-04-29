@@ -54,6 +54,7 @@ body {
   border-radius: 1.5rem;
   padding: 1rem;
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -128,4 +129,51 @@ body {
 .pending-task-btn:hover {
   background-color: #e5e7eb;
   transition: background-color 0.5s ease;
+}
+
+/* JS styles */
+
+#taskList {
+  /* list-style-type: none; */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 30px;
+  /* width: 100%; */
+  list-style: none;
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  /* justify-content: space-around; */
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.task-item:hover {
+  background-color: #f9f9ff;
+}
+
+.task-checkbox {
+  margin-right: 15px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary-color);
+}
+
+.task-text {
+  flex: 1;
+  margin-right: 15px;
+  word-break: break-word;
+  padding: 6px 0;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.task-text.completed {
+  text-decoration: line-through;
+  color: #6b7280;
 }
