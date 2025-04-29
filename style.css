@@ -65,7 +65,7 @@ body {
   display: flex;
   gap: 1rem;
 }
-#task-input {
+#taskInput {
   width: 90%;
   padding: 1rem;
   border: 2px solid #e5e7eb;
