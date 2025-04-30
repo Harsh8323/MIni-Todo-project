@@ -99,10 +99,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function renderTasks() {
     taskList.innerHTML = "";
+
     if (tasks.legth === 0) {
       emptyState.style.display = "block";
       return;
     }
+
     tasks.forEach((task, index) => {
       const listItem = document.createElement("li");
 
@@ -114,31 +116,33 @@ document.addEventListener("DOMContentLoaded", function () {
       } onchange="toggleTask(${index})" />
       <p>${task.text}</p>
     </div>
-          <div class="filter-btn">
-                          <button class="task-btn ${
-                            task.isEditing ? "save-btn" : "edit-btn"
-                          }" onclick="editTask(${index})">
-  ${task.isEditing ? "✓" : '<i class="fa-solid fa-pen-to-square"></i>'}
+          <div class="task-actions">
+            <button class="task-btn ${
+              task.isEditing ? "save-btn" : "edit-btn"
+            }">
+              ${
+                task.isEditing
+                  ? "✓"
+                  : '<i class="fa-solid fa-pen-to-square"></i>'
+              }
 </button>
-
-                <button class="task-btn delete-btn"  onclick ='deleteTask(${index}) '><i class="fa-solid fa-trash"></i> </button>
+                <button class="task-btn delete-btn">
+                <i class="fa-solid fa-trash"></i> 
+                </button>
           </div>
           </div>
           `;
-      // Add event listeners properly
-      const checkbox = listItem.querySelector(".checkbox");
+      taskList.appendChild(listItem);
 
       const editBtn = listItem.querySelector(".edit-btn, .save-btn");
-      const deleteBtn = listItem.querySelector(".delete-btn");
-
-      // checkbox.addEventListener("change", () => toggleTask(index));
       editBtn.addEventListener("click", () => editTask(index));
+
+      const deleteBtn = listItem.querySelector(".delete-btn");
       deleteBtn.addEventListener("click", () => deleteTask(index));
 
       listItem.addEventListener("change", () => toggleTask(index));
       listItem.dataset.id = task.id;
-      taskList.appendChild(listItem);
-      hideContent(); //-> hide empty state
+      hideContent();
     });
   }
 
