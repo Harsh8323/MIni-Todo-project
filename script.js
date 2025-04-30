@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
     renderTasks();
     setupEventListeners();
   }
-  // Event listeners
 
   //  setup event listeners
   function setupEventListeners() {
@@ -26,25 +25,22 @@ document.addEventListener("DOMContentLoaded", function () {
       addTask();
     });
 
-    // Add task events
     taskInput.addEventListener("keypress", function (e) {
       if (e.key === "Enter" && taskInput.value.trim() !== "") {
-        return addTask();
+        addTask();
       }
     });
 
-    // Filter buttons
+    // Filter buttons event listeners
     filterBtns.forEach((btn) => {
       btn.addEventListener("click", function () {
         currentFilter = btn.dataset.filter;
+
         filterBtns.forEach((b) => b.classList.remove("active"));
         btn.classList.add("active");
         renderTasks();
       });
     });
-
-    // Task actions using event delegation
-    // tasksContainer.addEventListener("click", handleTaskActions);
   }
   function addTask() {
     const taskText = taskInput.value.trim();
@@ -54,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Please add a task");
       return;
     }
-
     const newTask = {
       id: Date.now(),
       text: taskText,
@@ -77,14 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
     renderTasks();
   }
 
-  // function deleteTask(id) {
-  //   tasks = tasks.filter((task) => task.id !== id);
-  //   saveTasks();
-  //   renderTasks();
-  // }
   function deleteTask(index) {
     if (index >= 0 && index < tasks.length) {
-      taskInput.value = tasks[index].text; // Confusing UX
+      taskInput.value = tasks[index].text;
       tasks.splice(index, 1);
       taskInput.value = "";
       saveTasks();
@@ -93,19 +83,31 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function editTask(index) {
-    taskInput.value = tasks[index].text; // Confusing UX
+    taskInput.value = tasks[index].text;
     tasks.splice(index, 1);
   }
 
+  function filterTasks() {
+    return tasks.filter((task) => {
+      if (currentFilter === "all") return true;
+      if (currentFilter === "completed") return task.completed;
+      if (currentFilter === "pending") return !task.completed;
+      return true;
+    });
+  }
+
+  //  render tasks
   function renderTasks() {
     taskList.innerHTML = "";
+    const filteredTasks = filterTasks();
 
-    if (tasks.legth === 0) {
+    if (filteredTasks.length === 0) {
       emptyState.style.display = "block";
       return;
     }
+    emptyState.style.display = "none";
 
-    tasks.forEach((task, index) => {
+    filteredTasks.forEach((task, index) => {
       const listItem = document.createElement("li");
 
       listItem.innerHTML = `  
@@ -132,16 +134,29 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
           </div>
           `;
-      taskList.appendChild(listItem);
-
+      // Add event listeners
+      const checkbox = listItem.querySelector(".checkbox");
       const editBtn = listItem.querySelector(".edit-btn, .save-btn");
-      editBtn.addEventListener("click", () => editTask(index));
-
       const deleteBtn = listItem.querySelector(".delete-btn");
-      deleteBtn.addEventListener("click", () => deleteTask(index));
 
-      listItem.addEventListener("change", () => toggleTask(index));
-      listItem.dataset.id = task.id;
+      checkbox.addEventListener("change", () => {
+        const taskIndex = tasks.findIndex((t) => t.id === task.id);
+        if (taskIndex !== -1) toggleTask(taskIndex);
+      });
+
+      editBtn.addEventListener("click", () => {
+        const taskIndex = tasks.findIndex((t) => t.id === task.id);
+        if (taskIndex !== -1) editTask(taskIndex);
+      });
+
+      deleteBtn.addEventListener("click", () => {
+        const taskIndex = tasks.findIndex((t) => t.id === task.id);
+        if (taskIndex !== -1) deleteTask(taskIndex);
+      });
+
+      taskList.appendChild(listItem);
+      // listItem.addEventListener("change", () => toggleTask(index));
+      // listItem.dataset.id = task.id;
       hideContent();
     });
   }
