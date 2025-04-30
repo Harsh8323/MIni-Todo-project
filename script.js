@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
   //  setup event listeners
   function setupEventListeners() {
     taskForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      addTask();
-    });
+      e.preventDefault(); // This prevents page refresh
+      const taskText = taskInput.value.trim();
 
-    taskInput.addEventListener("keypress", function (e) {
-      if (e.key === "Enter" && taskInput.value.trim() !== "") {
-        addTask();
+      if (taskText === "") {
+        alert("Please add a task");
+        return;
       }
+      addTask();
     });
 
     // Filter buttons event listeners
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const filteredTasks = filterTasks();
 
     if (filteredTasks.length === 0) {
-      emptyState.style.display = "block";
+      // emptyState.style.display = "block";
       return;
     }
     emptyState.style.display = "none";
