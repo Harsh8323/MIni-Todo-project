@@ -9,10 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let tasks = [];
 
-  // taskForm.addEventListener("submit", (e) => {
-  //   e.preventDefault();
-  // });
-
   addTaskBtn.addEventListener("click", (e) => {
     e.preventDefault();
     addTask();
@@ -42,55 +38,64 @@ document.addEventListener("DOMContentLoaded", function () {
     taskInput.focus();
   }
 
-  function toggleTaskCompletion(index) {
+  function toggleTask(index) {
     tasks[index].completed = !tasks[index].completed;
     console.log(tasks);
     saveTasks();
     renderTasks();
   }
 
-  function deleteTask(index) {
-    if (confirm("Are you sure you want to delete this task?")) {
-      tasks.splice(index, 1);
-      saveTasks();
-      renderTasks();
-    }
-    console.log(tasks);
+  function deleteTask(id) {
+    tasks = tasks.filter((task) => task.id !== id);
+    saveTasks();
+    renderTasks();
   }
 
+  function editTask(index) {
+    taskInput.value = tasks[index].text;
+    tasks.splice(index, 1);
+    // tasks[index].isEditing = !tasks[index].isEditing;
+    saveTasks();
+    renderTasks();
+  }
   function renderTasks() {
     taskList.innerHTML = "";
-
-    tasks.forEach((task) => {
     tasks.forEach((task, index) => {
       const listItem = document.createElement("li");
 
-      listItem.innerHTML = `
-       <div class="task-item" data-id="${task.id}">
-               <input type="checkbox" class="task-checkbox" ${
-                 task.completed ? "checked" : ""
-               }>
-                ${
-                  task.isEditing
-                    ? `<input type="text" class="task-text editable" value="${task.text}">`
-                    : `<span class="task-text ${
-                        task.completed ? "completed" : ""
-                      }">${task.text}</span>`
-                }
-                <button class="task-btn ${
-                  task.isEditing ? "save-btn" : "edit-btn"
-                }">
-                    ${task.isEditing ? "✓" : "✎"}
-                </button>
-                <button class="task-btn delete-btn">🗑</button>
-            </div>
-      `;
+      listItem.innerHTML = `  
+  <div class="taskItem">
+    <div class="task ${task.completed ? "completed" : ""}">
+      <input type="checkbox" class="checkbox" ${
+        task.completed ? "checked" : ""
+      } onchange="toggleTask(${index})" />
+      <p>${task.text}</p>
+    </div>
+          <div class="filter-btn">
+                          <button class="task-btn ${
+                            task.isEditing ? "save-btn" : "edit-btn"
+                          }" onclick="editTask(${index})">
+  ${task.isEditing ? "✓" : '<i class="fa-solid fa-pen-to-square"></i>'}
+</button>
 
-      listItem.addEventListener("change", () => toggleTaskCompletion(index));
+                <button class="task-btn delete-btn"  onclick ='deleteTask(${index}) '><i class="fa-solid fa-trash"></i> </button>
+          </div>
+          </div>
+          `;
+      // Add event listeners properly
+      // const checkbox = listItem.querySelector(".checkbox");
+      const editBtn = listItem.querySelector(".edit-btn, .save-btn");
+      const deleteBtn = listItem.querySelector(".delete-btn");
+
+      // checkbox.addEventListener("change", () => toggleTask(index));
+      editBtn.addEventListener("click", () => editTask(index));
+      deleteBtn.addEventListener("click", () => deleteTask(index));
 
       taskList.appendChild(listItem);
-      // taskList.style.display = "hidden";
-      hideContent();
+
+      listItem.addEventListener("change", () => toggleTask(index));
+      listItem.dataset.id = task.id;
+      taskList.appendChild(listItem);
       hideContent(); //-> hide empty state
     });
   }
@@ -99,67 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
     emptyState.style.display = "none";
   }
 
-  addTaskBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    addTask();
-  });
   function saveTasks() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }
 });
-
-// function renderTasks() {
-//   const filteredTasks = getFilteredTasks();
-
-//   if (filteredTasks.length === 0) {
-//     tasksContainer.innerHTML = getEmptyMessage();
-//     return;
-//   }
-
-//   tasksContainer.innerHTML = filteredTasks
-//     .map(
-//       (task) => `
-//             <div class="task-item" data-id="${task.id}">
-//                 <input type="checkbox" class="task-checkbox" ${
-//                   task.completed ? "checked" : ""
-//                 }>
-//                 ${
-//                   task.isEditing
-//                     ? `<input type="text" class="task-text editable" value="${task.text}">`
-//                     : `<span class="task-text ${
-//                         task.completed ? "completed" : ""
-//                       }">${task.text}</span>`
-//                 }
-//                 <button class="task-btn ${
-//                   task.isEditing ? "save-btn" : "edit-btn"
-//                 }">
-//                     ${task.isEditing ? "✓" : "✎"}
-//                 </button>
-//                 <button class="task-btn delete-btn">🗑</button>
-//             </div>
-//         `
-//     )
-//     .join("");
-// }
-
-// function addTask() {
-//   const taskText = taskInput.value.trim();
-
-//   if (!taskText) {
-//     alert("Please enter a task");
-//     return;
-//   }
-
-//   const newTask = {
-//     id: Date.now(),
-//     text: taskText,
-//     completed: false,
-//     isEditing: false,
-//   };
-
-//   tasks.unshift(newTask);
-//   saveTasks();
-//   renderTasks();
-//   taskInput.value = "";
-//   taskInput.focus();
-// }
