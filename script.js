@@ -5,34 +5,65 @@ document.addEventListener("DOMContentLoaded", function () {
   const addTaskBtn = document.getElementById("addTaskBtn");
   const taskList = document.getElementById("taskList");
   const emptyState = document.getElementById("emptyState");
-  const filterBtn = document.getElementById("filter-btn");
+  const filterBtns = document.querySelectorAll(".filter-btn");
 
-  let tasks = [];
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  let currentFilter = "all";
 
-  addTaskBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    addTask();
-  });
+  // Initialize the app
+  init();
 
+  function init() {
+    renderTasks();
+    setupEventListeners();
+  }
+  // Event listeners
+
+  //  setup event listeners
+  function setupEventListeners() {
+    taskForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      addTask();
+    });
+
+    // Add task events
+    taskInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter" && taskInput.value.trim() !== "") {
+        return addTask();
+      }
+    });
+
+    // Filter buttons
+    filterBtns.forEach((btn) => {
+      btn.addEventListener("click", function () {
+        currentFilter = btn.dataset.filter;
+        filterBtns.forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderTasks();
+      });
+    });
+
+    // Task actions using event delegation
+    // tasksContainer.addEventListener("click", handleTaskActions);
+  }
   function addTask() {
-    // const taskInput = document.getElementById("taskInput");
-    const text = taskInput.value.trim();
+    const taskText = taskInput.value.trim();
+    console.log(taskText);
+
+    if (taskText === "") {
+      alert("Please add a task");
+      return;
+    }
 
     const newTask = {
       id: Date.now(),
-      text: text,
+      text: taskText,
       completed: false,
       isEditing: false,
     };
 
-    if (!text) {
-      alert("Please add a task");
-      return;
-    }
-    console.log(tasks);
-
     tasks.unshift(newTask);
-    // saveTasks();
+    saveTasks();
     renderTasks();
     taskInput.value = "";
     taskInput.focus();
@@ -40,26 +71,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function toggleTask(index) {
     tasks[index].completed = !tasks[index].completed;
+
     console.log(tasks);
     saveTasks();
     renderTasks();
   }
 
-  function deleteTask(id) {
-    tasks = tasks.filter((task) => task.id !== id);
-    saveTasks();
-    renderTasks();
+  // function deleteTask(id) {
+  //   tasks = tasks.filter((task) => task.id !== id);
+  //   saveTasks();
+  //   renderTasks();
+  // }
+  function deleteTask(index) {
+    if (index >= 0 && index < tasks.length) {
+      taskInput.value = tasks[index].text; // Confusing UX
+      tasks.splice(index, 1);
+      taskInput.value = "";
+      saveTasks();
+      renderTasks();
+    }
   }
 
   function editTask(index) {
-    taskInput.value = tasks[index].text;
+    taskInput.value = tasks[index].text; // Confusing UX
     tasks.splice(index, 1);
-    // tasks[index].isEditing = !tasks[index].isEditing;
-    saveTasks();
-    renderTasks();
   }
+
   function renderTasks() {
     taskList.innerHTML = "";
+    if (tasks.legth === 0) {
+      emptyState.style.display = "block";
+      return;
+    }
     tasks.forEach((task, index) => {
       const listItem = document.createElement("li");
 
@@ -83,15 +126,14 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
           `;
       // Add event listeners properly
-      // const checkbox = listItem.querySelector(".checkbox");
+      const checkbox = listItem.querySelector(".checkbox");
+
       const editBtn = listItem.querySelector(".edit-btn, .save-btn");
       const deleteBtn = listItem.querySelector(".delete-btn");
 
       // checkbox.addEventListener("change", () => toggleTask(index));
       editBtn.addEventListener("click", () => editTask(index));
       deleteBtn.addEventListener("click", () => deleteTask(index));
-
-      taskList.appendChild(listItem);
 
       listItem.addEventListener("change", () => toggleTask(index));
       listItem.dataset.id = task.id;

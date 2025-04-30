@@ -92,7 +92,7 @@ body {
 
   /* padding: 1rem; */
 }
-.all-task-btn {
+#all-task-btn {
   width: 40%;
   padding: 1rem;
   background-color: #e5e7eb;
@@ -102,7 +102,7 @@ body {
   font-size: medium;
   font-weight: bold;
 }
-.completed-task-btn {
+#completed-task-btn {
   width: 80%;
   padding: 1rem;
   background-color: #fff;
@@ -112,7 +112,7 @@ body {
   font-size: medium;
   font-weight: bold;
 }
-.pending-task-btn {
+#pending-task-btn {
   width: 80%;
   padding: 1rem;
   background-color: #fff;
@@ -122,11 +122,11 @@ body {
   font-size: medium;
   font-weight: bold;
 }
-.completed-task-btn:hover {
+#completed-task-btn:hover {
   background-color: #e5e7eb;
   transition: background-color 0.5s ease;
 }
-.pending-task-btn:hover {
+#pending-task-btn:hover {
   background-color: #e5e7eb;
   transition: background-color 0.5s ease;
 }
@@ -145,7 +145,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
+  padding: 5px 15px;
   background-color: #e5e7eb;
   border-bottom: 1px solid #f0f0f0;
   border-radius: 15px;
