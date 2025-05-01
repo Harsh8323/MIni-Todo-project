@@ -1,9 +1,9 @@
-/* Media Queries for Responsive Design */
+/* Media Queries for Responsive Design
 
 /* Tablets (768px and below) */
 @media (max-width: 768px) {
   .todo-box {
-    width: 95%;
+    width: 90%;
     flex-direction: column;
     height: auto;
     min-height: 80vh;
@@ -25,6 +25,7 @@
 
   #taskForm {
     flex-direction: row;
+    gap: 1rem;
   }
 
   .add-task-btn {
@@ -44,6 +45,15 @@
 
   .task-btn .task-text {
     font-size: 20px;
+  }
+
+  .left-box {
+    overflow-y: auto;
+    max-height: 300px; /* Fixed height for scroll */
+  }
+
+  #taskList {
+    max-height: 350px; /* Adjusted for mobile */
   }
 }
 
@@ -94,10 +104,38 @@
   .empty-state p {
     font-size: 1rem;
   }
+
+  .left-box {
+    max-height: 350px;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+
+  #taskList {
+    max-height: 300px;
+  }
+
+  .left-box::-webkit-scrollbar,
+  #taskList::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .left-box::-webkit-scrollbar-thumb,
+  #taskList::-webkit-scrollbar-thumb {
+    background: #d1d5db;
+    border-radius: 3px;
+  }
+
+  .left-box::-webkit-scrollbar-thumb:hover,
+  #taskList::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+  }
 }
 
 /* Small Mobile Devices (360px and below) */
 @media (max-width: 360px) {
+  .left-box {
+    max-height: 400px;
+  }
   #taskForm {
     gap: 0.5rem;
   }
