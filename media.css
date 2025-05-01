@@ -1,0 +1,121 @@
+/* Media Queries for Responsive Design */
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+  .todo-box {
+    width: 95%;
+    flex-direction: column;
+    height: auto;
+    min-height: 80vh;
+  }
+
+  .left-box,
+  .right-box {
+    width: 100%;
+    height: auto;
+  }
+
+  .right-box {
+    gap: 1.5rem;
+  }
+
+  .input-container {
+    margin-top: 20px;
+  }
+
+  #taskForm {
+    flex-direction: row;
+  }
+
+  .add-task-btn {
+    width: 3rem;
+  }
+
+  .filter-buttons {
+    flex-direction: row;
+  }
+
+  #all-task-btn,
+  #completed-task-btn,
+  #pending-task-btn {
+    width: 100%;
+    padding: 0.75rem;
+  }
+
+  .task-btn .task-text {
+    font-size: 20px;
+  }
+}
+
+/* Mobile Devices (480px and below) */
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0.5rem;
+    margin: 0.5rem;
+  }
+
+  .todo-box {
+    padding: 0.75rem;
+    width: 100%;
+  }
+
+  #taskInput {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .add-task-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1rem;
+  }
+
+  .filter-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  #all-task-btn,
+  #completed-task-btn,
+  #pending-task-btn {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .taskItem {
+    padding: 8px 12px;
+  }
+
+  .task-btn .task-text {
+    font-size: 18px;
+  }
+
+  .empty-state p {
+    font-size: 1rem;
+  }
+}
+
+/* Small Mobile Devices (360px and below) */
+@media (max-width: 360px) {
+  #taskForm {
+    gap: 0.5rem;
+  }
+
+  #taskInput {
+    padding: 0.6rem;
+  }
+
+  .task {
+    gap: 6px;
+  }
+
+  .task-btn .task-text {
+    font-size: 16px;
+  }
+
+  .checkbox {
+    width: 16px;
+    height: 16px;
+  }
+}
