@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
   init();
 
   function init() {
+    document.querySelector('[data-filter="all"]').classList.add("active");
     renderTasks();
     setupEventListeners();
   }
