@@ -4,7 +4,7 @@
 @media (max-width: 768px) {
   .todo-box {
     width: 90%;
-    flex-direction: column;
+    flex-direction: column-reverse;
     height: auto;
     min-height: 80vh;
   }
@@ -49,11 +49,11 @@
 
   .left-box {
     overflow-y: auto;
-    max-height: 300px; /* Fixed height for scroll */
+    max-height: 300px;
   }
 
   #taskList {
-    max-height: 350px; /* Adjusted for mobile */
+    max-height: 350px;
   }
 }
 
@@ -65,6 +65,7 @@
   }
 
   .todo-box {
+    flex-direction: column-reverse;
     padding: 0.75rem;
     width: 100%;
   }
@@ -133,6 +134,9 @@
 
 /* Small Mobile Devices (360px and below) */
 @media (max-width: 360px) {
+  .todo-box {
+    padding: 0.5rem;
+  }
   .left-box {
     max-height: 400px;
   }
